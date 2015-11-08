@@ -1,0 +1,10 @@
+{
+    "test": {
+        "test": {
+            "tab": "devpackager",
+            "controller": "test",
+            "do": "",
+            "restriction": null
+        }
+    }
+}
