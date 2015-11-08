@@ -60,8 +60,8 @@ class _DevFiles extends \IPS\Application
 		}
 
 		/* Set our paths */
-		$appPath = join( \DIRECTORY_SEPARATOR, 'applications', $thisApp->app_directory );
-		$devPath = join( \DIRECTORY_SEPARATOR, $appPath, 'data', 'dev.tar' );
+		$appPath = join( \DIRECTORY_SEPARATOR, [ \IPS\ROOT_PATH, 'applications', $thisApp->app_directory ] );
+		$devPath = join( \DIRECTORY_SEPARATOR, [ $appPath, 'data', 'dev.tar' ] );
 
 		/* Load and extract our tarball */
 		try
