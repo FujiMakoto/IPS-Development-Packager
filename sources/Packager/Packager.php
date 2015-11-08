@@ -5,30 +5,21 @@ namespace IPS\devpackager;
 class _Packager
 {
 	/**
-	 * @brief   The packaged applications namespace
-	 */
-	public $namespace = '';
-
-	/**
-	 * @brief   Always extract development resources, even when not IN_DEV
-	 */
-	public $alwaysInclude = FALSE;
-
-	/**
-	 * Construct a new dev tools packager
+	 * Package development files
 	 *
-	 * @param string     $namespace     The namespace of the application being packaged. (e.g. 'IPS\devpackager')
-	 * @param bool|FALSE $alwaysInclude When TRUE, development resources will always be extracted on install, even when
-	 *                                  the IPS installation does not have IN_DEV mode enabled.
+	 * @param string    $appDir The application directory
 	 */
-	public function __construct( $namespace, $alwaysInclude=FALSE )
+	public static function packageDevFiles( $appDir )
 	{
-		$this->namespace = $namespace;
-		$this->alwaysInclude = $alwaysInclude;
-	}
+		/* Set our paths */
+		$appPath = join( \DIRECTORY_SEPARATOR, 'applications', $appDir );
+		$devPath = join( \DIRECTORY_SEPARATOR, $appPath, 'data', 'dev.tar' );
 
-	public function packageDevFiles()
-	{
-
+		/* Package our development files */
+		$devFiles = new \PharData( $devPath );
+		$appIterator = new \RecursiveDirectoryIterator(
+				join( \DIRECTORY_SEPARATOR, $appPath, 'dev' ), \RecursiveDirectoryIterator::SKIP_DOTS
+		);
+		$devFiles->buildFromIterator( $appIterator );
 	}
 }
