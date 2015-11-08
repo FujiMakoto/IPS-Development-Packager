@@ -1,12 +1,12 @@
 <?php
 /**
- * @brief		Development Files Container and Extractor
- * @author		<a href='https://www.Makoto.io'>Makoto Fujimoto</a>
- * @copyright	(c) 2015 Makoto Fujimoto
- * @package		Development Packer
- * @subpackage	{subpackage}
- * @since		11/08/2015
- * @version		0.1.0
+ * @brief       Development Files Container and Extractor
+ * @author      <a href='https://www.Makoto.io'>Makoto Fujimoto</a>
+ * @copyright   (c) 2015 Makoto Fujimoto
+ * @package     Development Packer
+ * @subpackage  {subpackage}
+ * @since       11/08/2015
+ * @version     0.1.0
  */
 
 namespace IPS\{app};
@@ -61,12 +61,12 @@ class _DevFiles extends \IPS\Application
 
 		/* Set our paths */
 		$appPath = join( \DIRECTORY_SEPARATOR, 'applications', $thisApp->app_directory );
-		$devFiles = join( \DIRECTORY_SEPARATOR, $appPath, 'data', 'dev.tar' );
+		$devPath = join( \DIRECTORY_SEPARATOR, $appPath, 'data', 'dev.tar' );
 
 		/* Load and extract our tarball */
 		try
 		{
-			$devFiles = new \PharData( $devFiles, 0, NULL, \Phar::TAR );
+			$devFiles = new \PharData( $devPath, 0, NULL, \Phar::TAR );
 			$devFiles->extractTo( $appPath, NULL, TRUE );
 		}
 		catch ( \Exception $e )
