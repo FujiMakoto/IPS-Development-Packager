@@ -47,7 +47,7 @@ class _Packager
 		$applications = \IPS\Application::applications();
 		foreach ( $applications as $application )
 		{
-			if ( $application->app_dir === $this->appDir )
+			if ( $application->directory === $this->appDir )
 			{
 				$this->app = $application;
 			}
@@ -64,11 +64,13 @@ class _Packager
 	public function packageDevFiles()
 	{
 		/* Package our development files */
-		$devFiles = new \PharData( $this->devPath );
-		$appIterator = new \RecursiveDirectoryIterator(
-				join( \DIRECTORY_SEPARATOR, $this->appPath, 'dev' ), \RecursiveDirectoryIterator::SKIP_DOTS
-		);
-		$devFiles->buildFromIterator( $appIterator );
+		$devFiles = new \PharData( $this->devPath, 0, 'dev.tar', \Phar::TAR );
+		/*$appIterator = new \RecursiveDirectoryIterator(
+				join( \DIRECTORY_SEPARATOR, [ $this->appPath, 'dev' ] ), \RecursiveDirectoryIterator::SKIP_DOTS
+		);*/
+		//$devFiles->buildFromIterator( $appIterator );
+		join( \DIRECTORY_SEPARATOR, [ $this->appPath, 'dev' ]);
+		$devFiles->buildFromDirectory( join( \DIRECTORY_SEPARATOR, [ $this->appPath, 'dev' ] ), '/^[^.].*$/' );
 	}
 
 	/**
@@ -79,23 +81,24 @@ class _Packager
 	public function createDevFilesClass()
 	{
 		$templatePath = join( \DIRECTORY_SEPARATOR, [
-				\IPS\ROOT, 'applications', 'devpackager', 'data', 'defaults', 'DevFiles.txt'
+				\IPS\ROOT_PATH, 'applications', 'devpackager', 'data', 'defaults', 'DevFiles.txt'
 		] );
 
 		/* Construct our template */
+		$appTitle = \IPS\Member::loggedIn()->language()->get( "__app_{$this->appDir}" );
 		$template = file_get_contents( $templatePath );
 		$template = str_replace( '{app}', $this->appDir, $template );
-		$template = str_replace( '{subpackage}', $this->app->app_title, $template );
+		$template = str_replace( '{subpackage}', $appTitle, $template );
 		$template = str_replace( '{in_dev_only}', $this->alwaysInclude ? 'FALSE' : 'TRUE', $template );
 
 		/* Make sure our source directory exists */
-		$sourcePath = join( \DIRECTORY_SEPARATOR, [ $this->appPath, 'source', 'DevFiles' ] );
+		$sourcePath = join( \DIRECTORY_SEPARATOR, [ $this->appPath, 'sources', 'DevFiles' ] );
 
 		if ( !is_dir($sourcePath) ) {
 			mkdir( $sourcePath, 0777, true);
 		}
 
 		/* Create our class file */
-		file_put_contents( join( \DIRECTORY_SEPARATOR, [ $sourcePath, 'DevFiles.php' ] ), $template );
+		\file_put_contents( join( \DIRECTORY_SEPARATOR, [ $sourcePath, 'DevFiles.php' ] ), $template );
 	}
 }

@@ -14,7 +14,7 @@ namespace IPS\{app};
 /**
  * {subpackage} Development Files Container
  */
-class _DevFiles extends \IPS\Application
+class _DevFiles
 {
 	/**
 	 * @brief    Should development resources be extracted IN_DEV only?
@@ -24,7 +24,7 @@ class _DevFiles extends \IPS\Application
 	/**
 	 * The directory of the application we are managing
 	 */
-	public static $appDir = '{app}'
+	public static $appDir = '{app}';
 
 	/**
 	 * Load and extract our application development files
@@ -48,7 +48,7 @@ class _DevFiles extends \IPS\Application
 		$applications = \IPS\Application::applications();
 		foreach ( $applications as $application )
 		{
-			if ( $application->app_dir === static::$appDir )
+			if ( $application->directory === static::$appDir )
 			{
 				$thisApp = $application;
 			}
@@ -57,17 +57,23 @@ class _DevFiles extends \IPS\Application
 		if ( !$thisApp )
 		{
 			\IPS\Log::i( \LOG_ERR )->write( 'Error : Application ' . static::$appDir . ' not found', 'devpackager_error' );
+			return;
 		}
 
 		/* Set our paths */
-		$appPath = join( \DIRECTORY_SEPARATOR, [ \IPS\ROOT_PATH, 'applications', $thisApp->app_directory ] );
-		$devPath = join( \DIRECTORY_SEPARATOR, [ $appPath, 'data', 'dev.tar' ] );
+		$appPath = join( \DIRECTORY_SEPARATOR, [ \IPS\ROOT_PATH, 'applications', $thisApp->directory ] );
+		$devPath = join( \DIRECTORY_SEPARATOR, [ $appPath, 'dev' ] );
+		$devTar  = join( \DIRECTORY_SEPARATOR, [ $appPath, 'data', 'dev.tar' ] );
 
 		/* Load and extract our tarball */
 		try
 		{
-			$devFiles = new \PharData( $devPath, 0, NULL, \Phar::TAR );
-			$devFiles->extractTo( $appPath, NULL, TRUE );
+			if ( !is_dir($devPath) ) {
+				mkdir( $devPath, 0777, true );
+			}
+
+			$devFiles = new \PharData( $devTar, 0, NULL, \Phar::TAR );
+			$devFiles->extractTo( $devPath, NULL, TRUE );
 		}
 		catch ( \Exception $e )
 		{
