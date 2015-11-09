@@ -60,6 +60,6 @@ Once that's done, build your application. That's it!
 
 Now whenever your application is built, all of your development resources should be re-packaged and saved to your applications **data** directory.
 
-These files are always included with your applications installation file. Not only this, but any time your application is installed in an environment where ```\IPS\IN_DEV``` is enabled, your development releases will be *automatically* extracted on installation.
+These files are always included with your applications installation archive. Not only this, but any time your application is installed in an environment where ```\IPS\IN_DEV``` is enabled, your development files will be *automatically* extracted on installation.
 
-This means you no longer have to maintain copies of your development files with every release, and other developers no longer ave to manually extract these files every time they install or upgrade your application in their development environments. Awesome!
+This means you no longer have to maintain copies of your development files with every release, and other developers no longer have to manually extract these files every time they install or upgrade your application in their development environments. Awesome!
