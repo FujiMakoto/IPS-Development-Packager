@@ -2,7 +2,7 @@
 ## Introduction
 Development Packager is an IPS application for third party developers that fully automates the task of packaging development files with other IPS applications.
 
-It also has the added benefit of doing all this in a fully transparent manner, meaning you never have to manually include these development with your application releases again.
+It also has the added benefit of doing all this in a fully transparent manner, meaning you never have to manually include these development files with your application releases again.
 
 ## How does it work?
 Integrating Development Packager into your own IPS application can be done in three easy steps.
