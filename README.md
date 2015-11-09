@@ -58,7 +58,7 @@ Again, replace **yourAppDirHere** respectively.
 
 Once that's done, build your application. That's it!
 
-Now whenever your application is built, all of your development resources should be re-packages and saved to your applications **data** directory.
+Now whenever your application is built, all of your development resources should be re-packaged and saved to your applications **data** directory.
 
 These files are always included with your applications installation file. Not only this, but any time your application is installed in an environment where ```\IPS\IN_DEV``` is enabled, your development releases will be *automatically* extracted on installation.
 
