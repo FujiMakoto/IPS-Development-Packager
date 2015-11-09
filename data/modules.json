@@ -1,8 +1,3 @@
 {
-    "admin": {
-        "test": {
-            "default_controller": "",
-            "protected": false
-        }
-    }
+    "admin": []
 }

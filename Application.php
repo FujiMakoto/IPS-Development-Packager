@@ -16,23 +16,8 @@ namespace IPS\devpackager;
  */
 class _Application extends \IPS\Application
 {
-	public function installOther()
+	public function get__icon()
 	{
-		/* Set our paths */
-		$appPath = join( \DIRECTORY_SEPARATOR, 'applications', $this->app_directory );
-		$devFiles = join( \DIRECTORY_SEPARATOR, $appPath, 'data', 'dev.tar' );
-
-		/* Load and extract our tarball */
-		try
-		{
-			$devFiles = new \PharData( $devFiles, 0, NULL, \Phar::TAR );
-			$devFiles->extractTo( $appPath, NULL, TRUE );
-		}
-		catch ( \Exception $e )
-		{
-			\IPS\Log::i( \LOG_ERR )->write( "Error : " . $e->getMessage() . "\n" . $e->getTraceAsString(), 'devpackager_error' );
-		}
-
-		parent::installOther();
+		return 'archive';
 	}
 }
